@@ -1,0 +1,24 @@
+<section>
+  <nav class="level is-mobile">
+    <div>
+      {{ if .HasPrev }}
+      <a class="button" href="{{ .Prev.URL }}">
+        <span class="icon is-small is-marginless">
+          {{ partial "svg/icons" "prev" }}
+        </span>
+        Newer
+      </a>
+      {{ end }}
+    </div>
+    <div>
+      {{ if .HasNext }}
+      <a class="button" href="{{ .Next.URL }}">
+        Older
+        <span class="icon is-small is-marginless">
+          {{ partial "svg/icons" "next" }}
+        </span>
+      </a>
+      {{ end }}
+    </div>
+  </nav>
+</section>

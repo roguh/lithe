@@ -1,0 +1,23 @@
+{{ define "content" }}
+<section class="has-text-centered">
+  <h1 class="title notfound">404</h1>
+  <h2 class="subtitle is-4">
+    Page not found
+  </h2>
+  <h2 class="subtitle error-emoji"></h2>
+  <a class="button" href="{{ .Site.BaseURL }}">Home Page</a>
+</section>
+
+<script>
+  var emojiArray = [
+    '\\(o_o)/', '(˚Δ˚)b', '(^-^*)', '(≥o≤)', '(^_^)b', '(·_·)',
+    '(>_<)', '(;-;)', '\\(^Д^)/',
+  ];
+  document.getElementsByClassName('error-emoji')[0].appendChild(
+    document.createTextNode(
+        emojiArray[Math.floor(Math.random() * emojiArray.length)]
+    )
+  );
+</script>
+{{ end }}
+

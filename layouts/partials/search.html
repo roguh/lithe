@@ -1,0 +1,9 @@
+<label for="searchQuery">
+    {{- if .Site.Params.SearchPrompt -}} {{- .Site.Params.SearchPrompt -}} {{- end -}}
+</label>
+<form class="search" method="get" action="/search/">
+<input type="text" name="q" id="searchQuery" placeholder="
+    {{- if .Site.Params.SearchPlaceholder -}}
+    {{- .Site.Params.SearchPlaceholder -}} {{- else -}} Search
+    {{- end -}}" autocomplete="off"/>
+</form>

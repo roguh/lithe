@@ -1,0 +1,127 @@
+{{ define "content" }}
+<section>
+  <div class="content">
+    {{ .Content }}
+    {{ partial "search" . }}
+  </div>
+  <div id="searchResults">
+  </div>
+</section>
+{{ end }}
+
+{{ define "scripts" }}
+<script src="{{ .Site.BaseURL }}/js/fuse.min.js"></script>
+
+{{- $.Scratch.Add "searchindex" slice -}}
+{{- range $index, $element := .Site.Pages -}}
+    {{- $.Scratch.Add "searchindex" (dict "id" $index "title" $element.Title "url" $element.Permalink "tags" $element.Params.tags "text" ($element.Summary | plainify) "date" ($element.Date.Format "2 Monday January 2006")) -}}
+{{- end -}}
+
+<script>
+var searchIndex = {{- $.Scratch.Get "searchindex" -}};
+
+var options = {
+  shouldSort: true,
+  tokenize: true,
+  includeMatches: true,
+  threshold: 0.5,
+  location: 0,
+  distance: 1000,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: [
+    "title",
+    "date",
+    "tags",
+    "text",
+  ]
+};
+
+// Show the entire field, even if it doesn't match
+smallKeys = ["title", "date", "tags"];
+
+var fuse = new Fuse(searchIndex, options);
+
+function search(term) {
+    var container = document.getElementById("searchResults");
+    container.innerHTML = "";
+    fuse.search(term).forEach(function(result) {
+        var resultDiv = document.createElement("div");
+        resultDiv.setAttribute("class", "result");
+        container.appendChild(resultDiv);
+    
+        options.keys.forEach(function(key) {
+            var isSmallKey = smallKeys.indexOf(key) >= 0;
+            var element = document.createElement("p");
+            resultDiv.appendChild(element);
+            if (key === "title") {
+                var anchor = document.createElement("a");
+                anchor.setAttribute("href", result.item.url);
+                element.appendChild(anchor);
+                element = anchor;
+            }
+            
+            var str = []
+            result.matches.forEach(function(match) {
+                if (match.key === key) {
+                    var lastIndex = 0;
+                    
+                    // If not a small key, 
+                    // only show substring that contains matches 
+                    match.indices.forEach(function(indexPair, ix) {
+                        // Highlight all matches
+                        if (ix > 0 || isSmallKey) {
+                            str.push(result.item[key].slice(lastIndex, indexPair[0]));
+                        }
+                        str.push("<emph>");
+                        str.push(result.item[key].slice(indexPair[0], indexPair[1] + 1));
+                        str.push("</emph>");
+                        lastIndex = indexPair[1] + 1;
+                    });
+                    if (isSmallKey) {
+                        str.push(result.item[key].slice(lastIndex));
+                    }
+                }
+            });
+            
+            if (str.length === 0 && isSmallKey) {
+                element.textContent = result.item[key];
+            } else {
+                element.innerHTML = str.join("");
+            }
+            element.setAttribute("class", key);
+        });
+    });
+}
+
+/* parse urlquery */
+var qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+        var p=a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+})(window.location.search.substr(1).split('&'));
+
+var searchQuery = document.getElementById("searchQuery");
+
+/* search every time the text input changes */
+searchQuery.oninput = function() {
+    search(searchQuery.value);
+};
+
+/* start a search if query is in the URL */
+if (qs["q"] !== undefined) {
+    search(qs["q"]);
+    searchQuery.value = qs["q"];
+}
+
+</script>
+{{ end }}
+

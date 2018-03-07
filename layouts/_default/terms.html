@@ -1,0 +1,19 @@
+{{ define "content" }}
+<section>
+  {{ $data := .Data }}
+  {{ range $key, $value := .Data.Terms.ByCount }}
+  <article>
+    <h1 class="title">
+    <a href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}"> {{ $value.Name }}</a>
+    <span class="subtitle"> ({{ $value.Count }} items)</span>
+    </h1>
+    <p>
+        {{ range $i, $page := $value.Pages }}
+            {{- if gt $i 0 -}}|{{ end }}
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+        {{ end }}
+    </p>
+  </article>
+  {{ end }}
+</section>
+{{ end }}

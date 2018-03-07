@@ -1,0 +1,22 @@
+<ul>
+{{ $currentPage := . }}
+{{ range .Site.Menus.footer }}
+  <li class="{{ if or ($currentPage.HasMenuCurrent "footer" .) ($currentPage.IsMenuCurrent "footer" .) }}active{{ end }}">
+    <a href="{{ .URL }}">
+    {{ .Pre }}
+    <span>{{ .Name }}</span>
+    </a>
+  </li>
+{{ end }}
+</ul>
+
+<div class="has-text-centered">
+  <p>{{ .Site.Copyright | safeHTML }}</p>
+  {{if .Site.Params.Info.poweredby}}
+    <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+  {{ end }}
+</div>
+
+{{ if .Site.GoogleAnalytics }}
+{{ template "_internal/google_analytics_async.html" . }}
+{{ end }}

@@ -1,0 +1,21 @@
+<h1 class="title is-4">
+<a class="nav-item" href="{{ .Site.BaseURL }}">
+{{ .Site.Title }}
+</a>
+</h1>
+        
+<nav>
+  {{- range $platform, $username := .Site.Params.social -}}
+  {{- if $username -}}
+    <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+    <span class="icon">
+        {{- partial "svg/icons" $platform -}}
+    </span>
+  </a>
+  {{- end -}}
+  {{- end -}}
+</nav>
+
+{{ if (not (eq "search" .Params.layout)) }}
+{{ partial "search" . }}
+{{ end }}
