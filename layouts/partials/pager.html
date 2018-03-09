@@ -1,24 +1,33 @@
 <section>
-  <nav class="row centered-text">
+  <nav class="row centered-text pager">
     <div class="col c4">
       {{ if .HasPrev }}
-      <a class="btn smooth" href="{{ .Prev.URL }}">
+      <a class="btn btn-sm smooth" href="{{ .Prev.URL }}">
         <span class="icon marginless">
-          {{ partial "svg/icons" "prev" }}
+          {{ partial "entypo-icons/left.svg"}}
         </span>
         Prev
       </a>
       {{ end }}
     </div>
     <div class="col c4">
-        <br>
+        {{ if .HasPrev }}
+        <a class="btn btn-sm smooth" href="{{ .First.URL }}">
+          Page 1
+        </a>
+        <a class="btn btn-sm smooth" href="{{ .Last.URL }}">
+          Page {{ .TotalPages }}
+        </a>
+        {{ else }}
+          <br>
+        {{ end }}
     </div>
     <div class="col c4">
       {{ if .HasNext }}
-      <a class="btn smooth" href="{{ .Next.URL }}">
+      <a class="btn btn-sm smooth" href="{{ .Next.URL }}">
         Next
         <span class="icon marginless">
-          {{ partial "svg/icons" "next" }}
+          {{ partial "entypo-icons/right.svg"}}
         </span>
       </a>
       {{ end }}

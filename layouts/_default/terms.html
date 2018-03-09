@@ -11,10 +11,10 @@
   {{ range $key, $value := .Data.Terms.ByCount }}
   <article class='term-container' id="tag-{{ $value.Name | urlize }}">
     <p>
-      <span>{{ $value.Count }} items tagged</span>
-      <a href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}">#{{ $value.Name }}</a>
+      <a class="title" href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}">#{{ $value.Name }}</a>
+      <span>has {{ $value.Count }} items</span>
     </p>
-    <p>
+    <p class="tags">
       {{ range $i, $page := $value.Pages }}
         {{- if gt $i 0 -}}|{{ end }}
         <a href="{{ .Permalink }}">{{ .Title }}</a>

@@ -13,7 +13,7 @@
   </div>
 
   <p>
-  Alternatively, browse all 
+  Browse all 
   {{ range $name, $taxonomy := .Site.Taxonomies }}
     <a href="/{{ $name }}">{{ $name }}</a>,
   {{ end }}
@@ -42,15 +42,15 @@ var site = ({{- $.Scratch.Get "searchindex" -}}).map(function(d) {
             return d;
         }),
         fuzzyOptions = {
-        limit: 25,
-        allowTypo: true,
-        keys: [
-          "title",
-          "date",
-          "tags",
-          "url",
-          "text",
-        ]
+            limit: 25,
+            allowTypo: true,
+            keys: [
+              "title",
+              "date",
+              "tags",
+              "url",
+              "text",
+            ]
     },
     siteIndex = site.map(function(d) {
         var e = {};
@@ -64,11 +64,63 @@ var site = ({{- $.Scratch.Get "searchindex" -}}).map(function(d) {
         return e;
     });
 
+var r;
 function search(query) {
+    /*
+    0. regex = new RegExp(query, "i")
+    1. for all entries, for all keys:
+       element.target.search(regex)
+    2. if matched, add to exactResults in fuzzysort's result format
+       [ { target: element.target 
+           indexes: [index, ..., index+query.length] 
+           score: EXCELLENT } ] 
+       obj: element
+    3. remove from results to avoid double match
+    */
     var results = fuzzysort.go(query, siteIndex, fuzzyOptions),
         container = document.getElementById("searchResults");
+
+    var regex = new RegExp(query, "i"),
+        exactResults = [],
+        exactResultIds = [];
     
+    site.forEach(function (element, index) {
+        var result = [], validResult = false;
+        fuzzyOptions.keys.forEach(function(key) {
+            var ix = element[key].search(regex);
+            if (ix >= 0) {
+                validResult = true;
+                var indexes = new Array(query.length).fill();
+                indexes.forEach(function(d, i) {
+                    indexes[i] = ix + i;
+                });
+                var keyResult = {
+                        target: element[key],
+                        indexes: indexes,
+                        score: 1E9,
+                    };
+                result.push(keyResult);
+            } else {
+                result.push(null);
+            }
+        });
+        if (validResult) {
+            result.obj = siteIndex[index];
+            exactResults.push(result);
+            exactResultIds.push(result.obj.id);
+        }
+    });
+
+    // Remove all duplicates
+    results = exactResults.concat(results.filter(function(item) {
+        return exactResultIds.indexOf(item.obj.id) === -1;
+    }));
+
     container.innerHTML = "";
+
+    if (results.length === 0 && query.length > 0) {
+        container.innerHTML = "<p>No results.</p>";
+    }
     
     results.forEach(function(result) {
         var resultDiv = document.createElement("div"),

@@ -1,8 +1,22 @@
-<p><a href='#top-of-page'>Go to top</a></p>
+<p>
+<a id="to-top" class="btn btn-sm" href='#top-of-page'>Go to top</a>
+</p>
 
 <nav>
-    {{ partial "menu" . }}
+    {{ partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "footer") }}
 </nav>
+
+<div class="social menu">        
+  {{- range $platform, $username := .Site.Params.social -}}
+  {{- if $username -}}
+  <div class="menu-entry">
+  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+    {{ $platform | humanize }}: {{ print ( index $.Site.Data.theme.social.base $platform ) $username }}
+  </a>
+  </div>
+  {{- end -}}
+  {{- end -}}
+</div>
 
 <p>{{ .Site.Copyright | safeHTML }}</p>
 
@@ -22,3 +36,14 @@ Last change: {{ .Site.LastChange }}.
 Copyright: {{ .Site.Copyright }}.
 Hugo version: {{ .Hugo.Version }}.
 </p>
+
+<script>
+  var elem = document.getElementById("to-top");
+  if (window.scroll !== undefined) {
+    elem.href = "";
+    elem.setAttribute("href", "");
+    elem.onclick = function() {
+      window.scroll({top: 0, behavior: 'smooth' });
+    }
+  }
+</script>

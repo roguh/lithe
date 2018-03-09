@@ -1,16 +1,29 @@
 {{ define "content" }}
 <section>
-  <h1>{{ .Title }}</h1>
-  <p class="date">{{ .Date.Format "January 2, 2006" }}</p>
-  <p class="tags">
-    {{ if .Params.tags }}
+  <p class="title big-title">{{ .Title }}</p>
+  <p>
+    {{ if not .Params.HideDate }}
+    {{ partial "date" (.Date.Format "January 2, 2006") }}
+    {{ end }}
+
+    {{ if and (not .Params.HideTags) .Params.tags }}
     {{ partial "tags" .Params.tags }}
     {{ end }}
+  
   </p>
 
-  {{ if (eq .Params.toc true) }}
-    <a href='#toc-of-page'>See table of contents</a>
+  <p>
+  {{ if (eq .Params.toc "top") }}
+  <aside>
+    <h3 id='toc-of-page'>Table of contents</h3>
+    {{ .TableOfContents }}
+  </aside>
   {{ end }}
+
+  {{ if (eq .Params.toc "bottom") }}
+    <a class="toc-link" href='#toc-of-page'>Table of contents available.</a>
+  {{ end }}
+  </p>
 
   {{ if and (.Site.Params.Info.adsense) (.Params.adsenseTop) }}
     {{ partial "adsense" . }}
@@ -24,7 +37,7 @@
     {{ end }}
   </div>
 
-  {{ if (eq .Params.toc true) }}
+  {{ if (eq .Params.toc "bottom") }}
   <aside>
     <h2 id='toc-of-page'>Table of contents</h2>
     {{ .TableOfContents }}

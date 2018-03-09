@@ -3,26 +3,33 @@ html {
 }
 
 body {
-    font-size: 1em;
+    font-size: 1.0em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #333;
+    color: #733;
     padding: 0.5em 0;
     margin: 0;
 }
 
+h3, h4, h5, h6 {
+    padding: 0.25em 0;
+}
+
 a { 
     text-decoration: none;
-    color: inherit;
+    color: #444;
+    transition: all 0.25s;
 }
 
 header a:hover {
-    border-color: white;
+    border-color: orange;
+    color: orange;
 }
 
 a:hover {
     border-bottom: solid 1px black;
+    color: black;
 }
 
 .marginless {
@@ -31,14 +38,36 @@ a:hover {
 }
 
 .icon {
-    fill: #00000000;
-    stroke: black;
     width: 32px;
+    height: 32px;
     font-size: inherit;
     line-height: inherit;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
+    transition: all 0.25s;
+}
+
+header .icon svg, .pager .icon svg {
+    fill: white;
+}
+.icon svg {
+    fill: #333;
+    width: 100%;
+    height: 100%;
+}
+
+.social a:hover {
+    border: 0;
+    color: red;
+}
+.social a:hover .icon {
+    height: 38px;
+    width: 38px;
+}
+
+.social a:hover .icon svg {
+    fill: red;
 }
 
 .centered-text {
@@ -51,12 +80,7 @@ a:hover {
 }
 
 .big {
-    font-size: 8em;
-}
-
-#toc-of-page:target {
-    color: black;
-    transition: all 1s;
+    font-size: 7.5em;
 }
 
 strong {
@@ -71,32 +95,21 @@ header {
     padding: 1em 0;
 }
 
-header h1 {
+.intro h1 {
     font-size: 2.5em;
     display: inline-block;
     padding: 0;
     padding-right: 10px;
+    word-break: keep-all;
 }
-
-@media min-width(400px) {
-    header {
-        padding: 4em 0;
-    }
-    header h1 {
-        font-size: 4em;
-    }
-}
-
-input#searchQuery {
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-} 
 
 .intro {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+header p {
+    font-size: 1.25em;
 }
 
 .social {
@@ -108,7 +121,7 @@ header a, header input {
 }
 
 header .icon {
-    stroke: white;
+    fill: white;
 }
 
 header .search {
@@ -119,27 +132,75 @@ header .search {
     font-weight: normal;
 }
 
+.search input[type="text"] {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+} 
+
 .search {
-    margin: 2em 0;
+    margin: 1em 0;
 }
 
 .search input {
     display: inline-block;
-    font-size: 1.2em;
+    font-size: 3em;
     font-weight: bold;
+}
+
+header .search input {
+    font-size: 1.2em;
+}
+
+.menu {
+    line-height: 2;
 }
 
 .menu-entry:last-child {
     padding: 0;
 }
 
+
 .menu-entry {
     padding-right: 1em;
     display: inline-block;
 }
 
+.menu .icon {
+    width: 24px;
+    height: 24px;
+}
+
+.menu a:hover {
+    font-size: 105%;
+}
+
 .tags {
-    font-size: 0.8em;
+    font-size: 0.9em;
+}
+
+.date {
+}
+
+.title {
+    font-size: 1.6em;
+    font-weight: bold;
+    font-weight: bolder;
+}
+
+.title, .title a { 
+    color: #611;
+}
+
+.big-title {
+    font-size: 2.5em;
+    padding: 0;
+    margin: 0.25em 0;
+}
+
+.summary {
+    background-color: #f8f8f8;
+    padding: 0.5em;
 }
 
 footer {
@@ -150,10 +211,15 @@ footer {
     min-height: 100%;
 }
 
-a, code {
+a, code, main {
     word-wrap: break-word; /* IE */
     word-break: break-all;
 }
+
+main {
+    hyphens: auto;
+}
+
 
 main, pre {
     overflow-x: auto;
@@ -162,4 +228,61 @@ main, pre {
 .hide {
     opacity: 0.0;
     display: none;
+}
+
+@media (min-width: 400px) and (min-height: 500px) {
+    header {
+        padding: 3em 0;
+    }
+    .intro h1 {
+        font-size: 3em;
+    }
+    .big-title {
+        font-size: 3em;
+    }
+    .search {
+        margin: 2em 0;
+    }
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+
+ul {
+    padding-left: 1em;
+}
+
+li {
+    list-style-position: outside;
+    padding-left: 0.75em;
+}
+
+ul ul ul ul ul ul, ul ul ul ul, ul ul {
+    list-style: square;
+}
+
+ul, ul ul ul, ul ul ul ul ul {
+    list-style: disc;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.pager a {
+    font-size: 1.3em;
+}
+
+.toc-link {
+    font-style: italic;
 }
