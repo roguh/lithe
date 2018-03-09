@@ -1,20 +1,23 @@
 <section>
-  <nav class="level is-mobile">
-    <div>
+  <nav class="row centered-text">
+    <div class="col c4">
       {{ if .HasPrev }}
-      <a class="button" href="{{ .Prev.URL }}">
-        <span class="icon is-small is-marginless">
+      <a class="btn smooth" href="{{ .Prev.URL }}">
+        <span class="icon marginless">
           {{ partial "svg/icons" "prev" }}
         </span>
-        Newer
+        Prev
       </a>
       {{ end }}
     </div>
-    <div>
+    <div class="col c4">
+        <br>
+    </div>
+    <div class="col c4">
       {{ if .HasNext }}
-      <a class="button" href="{{ .Next.URL }}">
-        Older
-        <span class="icon is-small is-marginless">
+      <a class="btn smooth" href="{{ .Next.URL }}">
+        Next
+        <span class="icon marginless">
           {{ partial "svg/icons" "next" }}
         </span>
       </a>

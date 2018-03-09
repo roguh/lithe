@@ -1,11 +1,20 @@
+{{- .Hugo.Generator -}}
 <meta charset="utf-8">
 <title>{{- partial "data/title" . -}}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 {{ if .Site.Params.Info.enableSocial }}
 {{- partial "social/opengraph" . -}}
 {{ end }}
-<link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css"/>
+<!--link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css"/-->
+<link rel="stylesheet" href="{{ .Site.BaseURL }}/css/mincss.min.css"/>
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/custom.css"/>
 {{- range .Site.Params.Assets.customCSS -}}
 <link rel='stylesheet' href='{{ . | relURL }}'>
 {{- end -}}
+<link rel="stylesheet" href="{{ .Site.BaseURL }}/css/prism-basic.css">
+
+<noscript>
+  <style>
+    form.search { display: none; }
+  </style>
+</noscript>

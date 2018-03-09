@@ -1,16 +1,31 @@
 {{ define "content" }}
 <section>
-  <div class="content">
+  <noscript>
+    <p class="msg">Enable Javascript to search this website</p>
+  </noscript>
+
+  <div>
     {{ .Content }}
     {{ partial "search" . }}
   </div>
+
   <div id="searchResults">
   </div>
+
+  <p>
+  Alternatively, browse all 
+  {{ range $name, $taxonomy := .Site.Taxonomies }}
+    <a href="/{{ $name }}">{{ $name }}</a>,
+  {{ end }}
+  or <a href="/">articles</a>.
+  </p>
+  
 </section>
 {{ end }}
 
 {{ define "scripts" }}
-<script src="{{ .Site.BaseURL }}/js/fuse.min.js"></script>
+<!--script src="{{ .Site.BaseURL }}/js/fuse.min.js"></script-->
+<script src="{{ .Site.BaseURL }}/js/fuzzysort.js"></script>
 
 {{- $.Scratch.Add "searchindex" slice -}}
 {{- range $index, $element := .Site.Pages -}}
@@ -18,11 +33,102 @@
 {{- end -}}
 
 <script>
-var searchIndex = {{- $.Scratch.Get "searchindex" -}};
+var site = ({{- $.Scratch.Get "searchindex" -}}).map(function(d) {
+            if (d.tags === null) {
+                d.tags = "";
+            } else {
+                d.tags = "#" + d.tags.join(" #"); 
+            }
+            return d;
+        }),
+        fuzzyOptions = {
+        limit: 25,
+        allowTypo: true,
+        keys: [
+          "title",
+          "date",
+          "tags",
+          "url",
+          "text",
+        ]
+    },
+    siteIndex = site.map(function(d) {
+        var e = {};
+        Object.keys(d).forEach(function(k) {
+            if (fuzzyOptions.keys.indexOf(k) >= 0) {
+                e[k] = fuzzysort.prepare(d[k]);
+            } else {
+                e[k] = d[k];
+            }
+        });
+        return e;
+    });
 
-var options = {
+function search(query) {
+    var results = fuzzysort.go(query, siteIndex, fuzzyOptions),
+        container = document.getElementById("searchResults");
+    
+    container.innerHTML = "";
+    
+    results.forEach(function(result) {
+        var resultDiv = document.createElement("div"),
+            resultObj = site[result.obj.id];
+        resultDiv.setAttribute("class", "result");
+        container.appendChild(resultDiv);
+
+        // Add highlighted HTML to the list of results
+        // or force adding the content, even if it was not part of the match
+        function add(keyResult, index, forceShow, makeLink) {
+            var html = null;
+            if (keyResult === undefined || keyResult === null) {
+                if (forceShow) {
+                    html = resultObj.title;
+                }
+            } else {
+                html = fuzzysort.highlight(keyResult, "<strong>", "</strong>");
+            }
+            if (html !== null) {
+                var element = document.createElement("p");
+                element.setAttribute("class", fuzzyOptions.keys[index]);
+                if (makeLink) {
+                    var anchor = document.createElement("a");
+                    anchor.setAttribute("href", resultObj.url);
+                    element = anchor;
+                }
+                element.innerHTML = html;
+                resultDiv.appendChild(element);
+            }
+        }
+
+        var titleIx = fuzzyOptions.keys.indexOf("title");
+        
+        // Always show a title
+        add(result[titleIx], titleIx, true, true);
+        result.forEach(function(d, i) {
+            if (i !== titleIx) {
+                add(d, i);
+            }
+        })
+
+    });
+}
+
+/*
+var index = lunr(function() {
+    this.field('title');
+    this.field('date');
+    this.field('text');
+    for (i in searchIndex) {
+        this.add(searchIndex[i]);
+    }
+});
+*/
+
+/*
+var fuseOptions = {
   shouldSort: true,
   tokenize: true,
+  matchAllTokens: true,
   includeMatches: true,
   threshold: 0.5,
   location: 0,
@@ -38,9 +144,12 @@ var options = {
 };
 
 // Show the entire field, even if it doesn't match
-smallKeys = ["title", "date", "tags"];
+var smallKeys = ["title", "date", "tags"],
 
-var fuse = new Fuse(searchIndex, options);
+// how much non-matched characters to show around all matches
+    contextLength = 10;
+
+var fuse = new Fuse(searchIndex, fuzeOptions);
 
 function search(term) {
     var container = document.getElementById("searchResults");
@@ -61,7 +170,8 @@ function search(term) {
                 element = anchor;
             }
             
-            var str = []
+            var strs = [];
+            var str = result.item[key];
             result.matches.forEach(function(match) {
                 if (match.key === key) {
                     var lastIndex = 0;
@@ -69,30 +179,42 @@ function search(term) {
                     // If not a small key, 
                     // only show substring that contains matches 
                     match.indices.forEach(function(indexPair, ix) {
-                        // Highlight all matches
-                        if (ix > 0 || isSmallKey) {
-                            str.push(result.item[key].slice(lastIndex, indexPair[0]));
+                        if (ix === 0 && !isSmallKey) {
+                            lastIndex = Math.max(0, indexPair[0] - contextLength);
+                            if (lastIndex != 0) {
+                                strs.push("...");
+                            }
                         }
-                        str.push("<emph>");
-                        str.push(result.item[key].slice(indexPair[0], indexPair[1] + 1));
-                        str.push("</emph>");
+                        strs.push(str.slice(lastIndex, indexPair[0]));
+                        
+                        // Highlight all matches
+                        strs.push("<emph>");
+                        strs.push(str.slice(indexPair[0], indexPair[1] + 1));
+                        strs.push("</emph>");
+
                         lastIndex = indexPair[1] + 1;
                     });
-                    if (isSmallKey) {
-                        str.push(result.item[key].slice(lastIndex));
+                    var endIndex = str.length;
+                    if (!isSmallKey) {
+                        endIndex = Math.min(endIndex, lastIndex + contextLength)
+                    }
+                    strs.push(str.slice(lastIndex, endIndex));
+                    if (endIndex != str.length) {
+                        strs.push("...");
                     }
                 }
             });
             
-            if (str.length === 0 && isSmallKey) {
-                element.textContent = result.item[key];
+            if (strs.length === 0 && isSmallKey) {
+                element.textContent = str;
             } else {
-                element.innerHTML = str.join("");
+                element.innerHTML = strs.join("");
             }
             element.setAttribute("class", key);
         });
     });
 }
+*/
 
 /* parse urlquery */
 var qs = (function(a) {
@@ -114,6 +236,11 @@ var searchQuery = document.getElementById("searchQuery");
 /* search every time the text input changes */
 searchQuery.oninput = function() {
     search(searchQuery.value);
+    if (URLSearchParams !== undefined) {
+        var params = new URLSearchParams(location.search.slice(1));
+        params.set('q', searchQuery.value);
+        window.history.replaceState({}, '', location.pathname + '?' + params);
+    }
 };
 
 /* start a search if query is in the URL */

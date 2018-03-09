@@ -1,3 +1,165 @@
-emph {
+html {
+    font-family: Gill Sans, Gill Sans MT, Calibri, sans-serif;
+}
+
+body {
+    font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+    padding: 0.5em 0;
+    margin: 0;
+}
+
+a { 
+    text-decoration: none;
+    color: inherit;
+}
+
+header a:hover {
+    border-color: white;
+}
+
+a:hover {
+    border-bottom: solid 1px black;
+}
+
+.marginless {
+    margin: 0;
+    padding: 0;
+}
+
+.icon {
+    fill: #00000000;
+    stroke: black;
+    width: 32px;
+    font-size: inherit;
+    line-height: inherit;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.centered-text {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.small {
+    font-size: 75%;
+}
+
+.big {
+    font-size: 8em;
+}
+
+#toc-of-page:target {
+    color: black;
+    transition: all 1s;
+}
+
+strong {
     font-weight: bold;
+}
+
+
+
+header {
+    color: white;
+    background-color: #613;
+    padding: 1em 0;
+}
+
+header h1 {
+    font-size: 2.5em;
+    display: inline-block;
+    padding: 0;
+    padding-right: 10px;
+}
+
+@media min-width(400px) {
+    header {
+        padding: 4em 0;
+    }
+    header h1 {
+        font-size: 4em;
+    }
+}
+
+input#searchQuery {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+} 
+
+.intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social {
+    display: inline-block;
+}
+
+header a, header input {
+    color: white;
+}
+
+header .icon {
+    stroke: white;
+}
+
+header .search {
+    color: #ddd !important;
+}
+
+.search ::placeholder {
+    font-weight: normal;
+}
+
+.search {
+    margin: 2em 0;
+}
+
+.search input {
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.menu-entry:last-child {
+    padding: 0;
+}
+
+.menu-entry {
+    padding-right: 1em;
+    display: inline-block;
+}
+
+.tags {
+    font-size: 0.8em;
+}
+
+footer {
+    margin-top: 2em;
+    padding: 2em 0;
+    background-color: #faa;
+    text-align: center;
+    min-height: 100%;
+}
+
+a, code {
+    word-wrap: break-word; /* IE */
+    word-break: break-all;
+}
+
+main, pre {
+    overflow-x: auto;
+}
+
+.hide {
+    opacity: 0.0;
+    display: none;
 }

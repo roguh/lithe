@@ -1,21 +1,20 @@
 <section>
-  <div class="container">
     {{ range sort .Pages }}
     <article>
-      <h1 class="title"><a href="{{ .Permalink }}">
+      <p><a href="{{ .Permalink }}">
       {{ .Title }}{{ if .Draft }} :: Draft{{ end }}
-      </a></h1>
-      <h2 class="subtitle"><a href="{{ .Permalink }}">
+      </a></p>
+      <p>
       {{ .Date.Format "January 2, 2006" }}
-      </a></h2>
+      </p>
       {{ if .Params.tags }}
-      <div class="subtitle">
+      <p>
         {{ partial "tags" .Params.tags }}
-      </div>
+      </p>
       {{ end }}
       {{ if .Summary }}
-      <div class="content">
-        {{ .Summary | plainify | safeHTML }}
+      <div>
+        <p>{{ .Summary | plainify | safeHTML }}</p>
         {{ if .Truncated }}
         <a href="{{ .Permalink }}">
           Read more
@@ -25,6 +24,5 @@
       {{ end }}
     </article>
     {{ end }}
-  </div>
 </section>
 {{ partial "pager" . }}

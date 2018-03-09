@@ -1,11 +1,12 @@
-<ul>
+<nav class="menu">
 {{ $currentPage := . }}
 {{ range .Site.Menus.main }}
-  <li class="{{ if or ($currentPage.HasMenuCurrent "main" .) ($currentPage.IsMenuCurrent "main" .) }}active{{ end }}">
-    <a href="{{ .URL }}">
-    {{ .Pre }}
-    <span>{{ .Name }}</span>
-    </a>
-  </li>
+  <div class="menu-entry"> <a
+  {{- if or ($currentPage.HasMenuCurrent "main" .) ($currentPage.IsMenuCurrent "main" .) }}
+  class="active" {{ else }} href="{{ .URL }}" {{ end -}}>
+  {{ .Pre }}
+  <span>{{ .Name }}</span>
+  </a>
+  </div>
 {{ end }}
-</ul>
+</nav>

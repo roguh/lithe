@@ -1,20 +1,39 @@
-<h1 class="title is-4">
-<a class="nav-item" href="{{ .Site.BaseURL }}">
+<div class="intro">
+<h1>
+<a href="{{ .Site.BaseURL }}">
 {{ .Site.Title }}
 </a>
 </h1>
-        
-<nav>
+
+<div class="social">        
   {{- range $platform, $username := .Site.Params.social -}}
   {{- if $username -}}
-    <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
     <span class="icon">
-        {{- partial "svg/icons" $platform -}}
+      {{- partial "svg/icons" $platform -}}
     </span>
   </a>
   {{- end -}}
   {{- end -}}
-</nav>
+</div>
+</div>
+
+{{ if .IsHome }}
+<p>Hi! I'm a web developer/Python programmer/mathematician writing about what I find interesting and useful. <a href='#'>Check out a timeline of my recent projects.</a></p>
+{{ end }}
+
+<p>
+Search for some things I write about:
+<span class="tags">
+{{ range first 20 $.Site.Taxonomies.tags.ByCount }}
+<a href="{{ $.Site.LanguagePrefix }}/tags/{{ .Name | urlize }}">#{{ .Name }}</a>
+{{ end }}
+
+{{ range first 5 $.Site.Taxonomies.categories.ByCount }}
+<a href="{{ $.Site.LanguagePrefix }}/categories/{{ .Name | urlize }}">#{{ .Name }} </a>
+{{ end }}
+</span>
+</p>
 
 {{ if (not (eq "search" .Params.layout)) }}
 {{ partial "search" . }}

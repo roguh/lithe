@@ -1,4 +1,6 @@
+<span class="tags">
 {{ range $i, $val := . }}
 {{ if gt $i 0 }} | {{ end }}
 <a href="{{ "/tags/" | relURL }}{{ . | urlize }}">#{{ . }}</a>
 {{ end }}
+</span>

@@ -1,19 +1,104 @@
 {{ define "content" }}
+<form id="termSearchForm" class="search" method="get" action="{{ .Permalink }}">
+  <input class="c12" type="text" name="q" id="termSearchQuery" placeholder="
+    {{- if .Site.Params.TermSearchPlaceholder -}}
+    {{- .Site.Params.TermSearchPlaceholder -}} {{- else -}} Type to find terms
+    {{- end -}}" autocomplete="off"/>
+</form>
+
 <section>
   {{ $data := .Data }}
   {{ range $key, $value := .Data.Terms.ByCount }}
-  <article>
-    <h1 class="title">
-    <a href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}"> {{ $value.Name }}</a>
-    <span class="subtitle"> ({{ $value.Count }} items)</span>
-    </h1>
+  <article class='term-container' id="tag-{{ $value.Name | urlize }}">
     <p>
-        {{ range $i, $page := $value.Pages }}
-            {{- if gt $i 0 -}}|{{ end }}
-            <a href="{{ .Permalink }}">{{ .Title }}</a>
-        {{ end }}
+      <span>{{ $value.Count }} items tagged</span>
+      <a href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}">#{{ $value.Name }}</a>
+    </p>
+    <p>
+      {{ range $i, $page := $value.Pages }}
+        {{- if gt $i 0 -}}|{{ end }}
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      {{ end }}
     </p>
   </article>
   {{ end }}
 </section>
+{{ end }}
+
+
+{{ define "scripts" }}
+<script src="{{ .Site.BaseURL }}/js/fuzzysort.js"></script>
+
+{{- $.Scratch.Add "termindex" slice -}}
+{{- range $index, $element := .Data.Terms.ByCount -}}
+    {{- $.Scratch.Add "termindex" (dict "id" $index "name" $element.Name) -}}
+{{- end -}}
+
+<script>
+var terms = {{- $.Scratch.Get "termindex" -}},
+        fuzzyOptions = {
+        limit: 25,
+        allowTypo: true,
+        keys: [
+          "name",
+        ]
+    },
+    termIndex = terms.map(function(d) {
+        var e = {};
+        Object.keys(d).forEach(function(k) {
+            if (fuzzyOptions.keys.indexOf(k) >= 0) {
+                e[k] = fuzzysort.prepare(d[k]);
+            } else {
+                e[k] = d[k];
+            }
+        });
+        return e;
+    });
+
+var containers = document.getElementsByClassName('term-container');
+function search(query) {
+    var results = fuzzysort.go(query, termIndex, fuzzyOptions);
+    for (var i = 0; i < containers.length; i++) {
+        containers[i].style.display = (query.length > 0) ? 'none' : 'block';
+    }
+    results.forEach(function(result) {
+        var id = 'tag-' + terms[result.obj.id].name,
+            element = document.getElementById(id);
+        element.style.display = 'block';
+    });
+}
+
+/* parse urlquery */
+var qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+        var p=a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+})(window.location.search.substr(1).split('&'));
+
+var searchQuery = document.getElementById("termSearchQuery");
+
+/* search every time the text input changes */
+searchQuery.oninput = function() {
+    search(searchQuery.value);
+    if (URLSearchParams !== undefined) {
+        var params = new URLSearchParams(location.search.slice(1));
+        params.set('q', searchQuery.value);
+        window.history.replaceState({}, '', location.pathname + '?' + params);
+    }
+};
+
+/* start a search if query is in the URL */
+if (qs["q"] !== undefined) {
+    search(qs["q"]);
+    searchQuery.value = qs["q"];
+}
+</script>
 {{ end }}
