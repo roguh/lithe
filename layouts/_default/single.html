@@ -1,52 +1,53 @@
 {{ define "content" }}
 <section>
-  <p class="title big-title">{{ .Title }}</p>
-  <p>
-    {{ if not .Params.HideDate }}
-    {{ partial "date" (.Date.Format "January 2, 2006") }}
-    {{ end }}
+<p class="title big-title">{{- .Title -}}</p>
 
-    {{ if and (not .Params.HideTags) .Params.tags }}
-    {{ partial "tags" .Params.tags }}
-    {{ end }}
-  
-  </p>
-
-  <p>
-  {{ if (eq .Params.toc "top") }}
-  <aside>
-    <h3 id='toc-of-page'>Table of contents</h3>
-    {{ .TableOfContents }}
-  </aside>
+{{- if or (not .Params.HideDate) (not .Params.HideTags) }}
+<p>
+  {{ if not .Params.HideDate }}
+  {{ partial "date" (.Date.Format "January 2, 2006") }}
   {{ end }}
-
-  {{ if (eq .Params.toc "bottom") }}
-    <a class="toc-link" href='#toc-of-page'>Table of contents available.</a>
+  {{ if and (not .Params.HideTags) .Params.tags }}
+  {{ partial "tags" .Params.tags }}
   {{ end }}
-  </p>
+</p>
+{{ end -}}
 
-  {{ if and (.Site.Params.Info.adsense) (.Params.adsenseTop) }}
-    {{ partial "adsense" . }}
-  {{ end }}
+{{- if (eq .Params.toc "top") }}
+<aside>
+  <h3 id='toc-of-page'>Table of contents</h3>
+  {{ .TableOfContents }}
+</aside>
+{{ end -}}
 
-  <div>
-    {{ .Content }}
-    
-    {{ if .Site.Params.Info.related }}
-      <div class="related">{{ partial "related" . }}</div>
-    {{ end }}
-  </div>
+{{- if (eq .Params.toc "bottom") }}
+<p>
+  <a class="toc-link" href='#toc-of-page'>Table of contents available.</a>
+</p>
+{{ end -}}
 
-  {{ if (eq .Params.toc "bottom") }}
-  <aside>
-    <h2 id='toc-of-page'>Table of contents</h2>
-    {{ .TableOfContents }}
-  </aside>
-  {{ end }}
-
-  {{ if and (.Site.Params.Info.adsense)  (.Params.adsenseBottom) }}
+{{- if and (.Site.Params.Info.adsense) (.Params.adsenseTop) }}
   {{ partial "adsense" . }}
-  {{ end}}
+{{ end -}}
+
+<div class="content">
+  {{ .Content }}
+</div>
+  
+{{- if .Site.Params.Info.related }}
+  <div class="related">{{ partial "related" . }}</div>
+{{ end -}}
+
+{{- if (eq .Params.toc "bottom") }}
+<aside>
+  <h2 id='toc-of-page'>Table of contents</h2>
+  {{ .TableOfContents }}
+</aside>
+{{ end -}}
+
+{{ if and (.Site.Params.Info.adsense)  (.Params.adsenseBottom) }}
+{{ partial "adsense" . }}
+{{ end}}
 </section>
 {{ end }}
 
@@ -60,16 +61,16 @@
 {{ if (eq .Params.mathjax true) }}
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    processEscapes: true,
-    processEnvironments: true,
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-  },
+tex2jax: {
+  inlineMath: [['$','$'], ['\\(','\\)']],
+  processEscapes: true,
+  processEnvironments: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+},
 });
 </script>
 <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"
 ></script>
 {{ end }}
 {{ end }}

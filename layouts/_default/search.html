@@ -1,37 +1,33 @@
 {{ define "content" }}
 <section>
-  <noscript>
-    <p class="msg">Enable Javascript to search this website</p>
-  </noscript>
+<noscript>
+  <p class="msg">Enable Javascript to search this website</p>
+</noscript>
 
-  <div>
-    {{ .Content }}
-    {{ partial "search" . }}
-  </div>
+<div>
+  {{ .Content }}
+  {{ partial "search" . }}
+</div>
 
-  <div id="searchResults">
-  </div>
+<div id="searchResults"></div>
 
-  <p>
-  Browse all 
-  {{ range $name, $taxonomy := .Site.Taxonomies }}
-    <a href="/{{ $name }}">{{ $name }}</a>,
-  {{ end }}
-  or <a href="/">articles</a>.
-  </p>
+<p>
+Browse all 
+{{ range $name, $taxonomy := .Site.Taxonomies }}
+  <a href="/{{ $name }}">{{ $name }}</a>,
+{{ end }}
+or <a href="/">articles</a>.
+</p>
   
 </section>
 {{ end }}
 
 {{ define "scripts" }}
-<!--script src="{{ .Site.BaseURL }}/js/fuse.min.js"></script-->
 <script src="{{ .Site.BaseURL }}/js/fuzzysort.js"></script>
-
 {{- $.Scratch.Add "searchindex" slice -}}
 {{- range $index, $element := .Site.Pages -}}
     {{- $.Scratch.Add "searchindex" (dict "id" $index "title" $element.Title "url" $element.Permalink "tags" $element.Params.tags "text" ($element.Summary | plainify) "date" ($element.Date.Format "2 Monday January 2006")) -}}
 {{- end -}}
-
 <script>
 var site = ({{- $.Scratch.Get "searchindex" -}}).map(function(d) {
             if (d.tags === null) {
@@ -63,8 +59,6 @@ var site = ({{- $.Scratch.Get "searchindex" -}}).map(function(d) {
         });
         return e;
     });
-
-var r;
 function search(query) {
     /*
     0. regex = new RegExp(query, "i")
@@ -164,7 +158,6 @@ function search(query) {
 
     });
 }
-
 /*
 var index = lunr(function() {
     this.field('title');
@@ -303,4 +296,3 @@ if (qs["q"] !== undefined) {
 
 </script>
 {{ end }}
-

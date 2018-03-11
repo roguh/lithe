@@ -1,6 +1,8 @@
+{{ if and .Site.Params.searchBar (not (eq "search" .Params.layout)) }}
 <form id="searchForm" class="search" method="get" action="/search/">
   <input class="c12" type="text" name="q" id="searchQuery" placeholder="
     {{- if .Site.Params.SearchPlaceholder -}}
     {{- .Site.Params.SearchPlaceholder -}} {{- else -}} Search
     {{- end -}}" autocomplete="off"/>
 </form>
+{{ end }}

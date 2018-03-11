@@ -1,11 +1,10 @@
-<p>
-<a id="to-top" class="btn btn-sm" href='#top-of-page'>Go to top</a>
-</p>
+<p><a id="to-top" class="btn btn-sm" href='#top-of-page'>Go to top</a></p>
 
-<nav>
-    {{ partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "footer") }}
-</nav>
+{{- if .Site.Menus.footer }}
+{{ partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "footer") }}
+{{ end -}}
 
+{{- if .Site.Params.social -}}
 <div class="social menu">        
   {{- range $platform, $username := .Site.Params.social -}}
   {{- if $username -}}
@@ -17,31 +16,35 @@
   {{- end -}}
   {{- end -}}
 </div>
+{{ end -}}
 
+{{- if .Site.Copyright }}
 <p>{{ .Site.Copyright | safeHTML }}</p>
+{{ end }}
 
-{{if .Site.Params.Info.poweredby}}
+{{- if .Site.Params.Info.poweredby}}
 <p>Powered by 
   <a href="https://gohugo.io/">Hugo</a> (no, the static site generator) &amp; 
   <a href="https://github.com/ribice/kiss">Kiss</a>.
 </p>
-{{ end }}
+{{ end -}}
 
-{{ if .Site.GoogleAnalytics }}
+{{- if .Site.GoogleAnalytics }}
 {{ template "_internal/google_analytics_async.html" . }}
-{{ end }}
+{{ end -}}
 
+{{- if .Site.Params.hiddenFooter }}
 <p class='hide'>
 Last change: {{ .Site.LastChange }}.
 Copyright: {{ .Site.Copyright }}.
 Hugo version: {{ .Hugo.Version }}.
 </p>
+{{ end -}}
 
 <script>
   var elem = document.getElementById("to-top");
   if (window.scroll !== undefined) {
-    elem.href = "";
-    elem.setAttribute("href", "");
+    elem.removeAttribute("href");
     elem.onclick = function() {
       window.scroll({top: 0, behavior: 'smooth' });
     }

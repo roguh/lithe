@@ -1,27 +1,26 @@
 <section>
-    {{ range sort .Pages }}
-    <article>
-      <p class="title"><a href="{{ .Permalink }}">
-      {{ .Title }}{{ if .Draft }} :: Draft{{ end }}
-      </a></p>
-      
-      <p>
-      {{ partial "date" (.Date.Format "January 2, 2006") }}
-      {{ if .Params.tags }}
-        {{ partial "tags" .Params.tags }}
-      {{ end }}
-      </p>
-      {{ if .Summary }}
-      <div>
-        <p class='summary'>{{ .Summary | plainify | safeHTML }}</p>
-        {{ if .Truncated }}
-        <a href="{{ .Permalink }}">
-          Read more
-        </a>
-        {{ end }}
-      </div>
-      {{ end }}
-    </article>
-    {{ end }}
+  {{- range sort .Pages -}}
+  <article>
+    <p class="title"><a href="{{- .Permalink -}}">
+    {{- .Title -}}{{- if .Draft -}} :: Draft{{- end -}}
+    </a></p>
+    <p>
+    {{- partial "date" (.Date.Format "January 2, 2006") }}
+    {{ if .Params.tags -}}
+      {{- partial "tags" .Params.tags -}}
+    {{- end -}}
+    </p>
+    {{- if .Summary -}}
+    <div>
+      <p class='summary'>{{- .Summary | plainify | safeHTML -}}</p>
+      {{- if .Truncated -}}
+      <a href="{{- .Permalink -}}">
+        Read more
+      </a>
+      {{- end -}}
+    </div>
+    {{- end -}}
+  </article>
+  {{- end -}}
 </section>
-{{ partial "pager" . }}
+{{- partial "pager" . -}}

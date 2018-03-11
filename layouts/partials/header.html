@@ -5,6 +5,7 @@
 </a>
 </h1>
 
+{{- if .Site.Params.social }}
 <div class="social">        
   {{- range $platform, $username := .Site.Params.social -}}
   {{- if $username -}}
@@ -14,27 +15,28 @@
   {{- end -}}
   {{- end -}}
 </div>
+{{ end -}}
+
 </div>
 
-{{ if .IsHome }}
-<p>{{ .Site.Params.Description }}
-{{ if .Site.Params.ExtraInfo }}
-{{ .Site.Params.ExtraIntro | markdownify }}
-{{ end }}
+{{- if .IsHome }}
+  <p>{{ .Site.Params.Description }}
 
-<span class="tags">
-{{- range $index, $val := first 20 $.Site.Taxonomies.tags.ByCount -}}
-{{ if (gt $index 0) }},{{ end }}
-<a href="{{ $.Site.LanguagePrefix }}/tags/{{ .Name | urlize }}"
-> #{{ .Name }}</a>
-{{- end -}}
-</p>
-{{ end }}
+  {{- if .Site.Params.ExtraInfo }}
+  {{ .Site.Params.ExtraIntro | markdownify }}
+  {{ end -}}
+  
+  <span class="tags">
+  {{- range $index, $val := first 20 $.Site.Taxonomies.tags.ByCount -}}
+  {{ if (gt $index 0) }},{{ end }}
+  <a href="{{ $.Site.LanguagePrefix }}/tags/{{ .Name | urlize }}"> #{{ .Name }}</a>
+  {{- end -}}
+  </span>
+  </p>
+{{ end -}}
 
-{{ if (not (eq "search" .Params.layout)) }}
-{{ partial "search" . }}
-{{ end }}
+{{- partial "search" . -}}
 
-<nav>
-    {{ partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "main") }}
-</nav>
+{{- if .Site.Menus.main }}
+{{- partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "main") -}}
+{{ end -}}

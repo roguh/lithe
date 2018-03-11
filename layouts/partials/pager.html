@@ -1,17 +1,17 @@
 <section>
   <nav class="row centered-text pager">
     <div class="col c4">
-      {{ if .HasPrev }}
+      {{- if .HasPrev }}
       <a class="btn btn-sm smooth" href="{{ .Prev.URL }}">
         <span class="icon marginless">
           {{ partial "entypo-icons/left.svg"}}
         </span>
         Prev
       </a>
-      {{ end }}
+      {{ end -}}
     </div>
     <div class="col c4">
-        {{ if .HasPrev }}
+        {{- if .HasPrev }}
         <a class="btn btn-sm smooth" href="{{ .First.URL }}">
           Page 1
         </a>
@@ -20,17 +20,17 @@
         </a>
         {{ else }}
           <br>
-        {{ end }}
+        {{ end -}}
     </div>
     <div class="col c4">
-      {{ if .HasNext }}
+      {{- if .HasNext }}
       <a class="btn btn-sm smooth" href="{{ .Next.URL }}">
         Next
         <span class="icon marginless">
           {{ partial "entypo-icons/right.svg"}}
         </span>
       </a>
-      {{ end }}
+      {{ end -}}
     </div>
   </nav>
 </section>

@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.Language }}">
 <head>
-  {{ partial "head" . }}
+  {{- partial "head" . }}
 </head>
 <body id='top-of-page'>
-  <header>
-  <div class="container">
-      {{ partial "header" . }}
-  </div>
-  </header>
-  
-  <main>
-  <div class="container">
-    {{ block "content" . }}{{ end }}
-  </div>
-  </main>
-
-  <footer>
-  <div class="container">
-    {{ partial "footer.html" . }}
-  </div>
-  </footer>
-  {{ partial "scripts.html" . }}
-  {{ block "scripts" . }}{{ end }}
+<header>
+<div class="container">
+  {{- partial "header" . }}
+</div>
+</header>
+<main>
+<div class="container">
+  {{- block "content" . }}{{ end }}
+</div>
+</main>
+<footer>
+<div class="container">
+  {{- partial "footer.html" . -}}
+</div>
+</footer>
+{{- partial "scripts.html" . -}}
+{{- block "scripts" . }}
+{{ end -}}
 </body>
 </html>

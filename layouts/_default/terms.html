@@ -7,24 +7,23 @@
 </form>
 
 <section>
-  {{ $data := .Data }}
-  {{ range $key, $value := .Data.Terms.ByCount }}
-  <article class='term-container' id="tag-{{ $value.Name | urlize }}">
-    <p>
-      <a class="title" href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}">#{{ $value.Name }}</a>
-      <span>has {{ $value.Count }} items</span>
-    </p>
-    <p class="tags">
-      {{ range $i, $page := $value.Pages }}
-        {{- if gt $i 0 -}}|{{ end }}
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-      {{ end }}
-    </p>
-  </article>
-  {{ end }}
+{{ $data := .Data }}
+{{ range $key, $value := .Data.Terms.ByCount }}
+<article class='term-container' id="tag-{{ $value.Name | urlize }}">
+  <p>
+    <a class="title" href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}">#{{ $value.Name }}</a>
+    <span>has {{ $value.Count }} items</span>
+  </p>
+  <p class="tags">
+    {{ range $i, $page := $value.Pages }}
+      {{- if gt $i 0 -}}|{{ end }}
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    {{ end }}
+  </p>
+</article>
+{{ end }}
 </section>
 {{ end }}
-
 
 {{ define "scripts" }}
 <script src="{{ .Site.BaseURL }}/js/fuzzysort.js"></script>

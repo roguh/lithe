@@ -2,9 +2,9 @@
 <meta charset="utf-8">
 <title>{{- partial "data/title" . -}}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-{{ if .Site.Params.Info.enableSocial }}
+{{- if .Site.Params.Info.enableSocial }}
 {{- partial "social/opengraph" . -}}
-{{ end }}
+{{ end -}}
 <!--link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css"/-->
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/mincss.min.css"/>
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/custom.css"/>
@@ -13,8 +13,10 @@
 {{- end -}}
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/prism-basic.css">
 
+{{- if .Site.Params.searchBar }}
 <noscript>
   <style>
     form.search { display: none; }
   </style>
 </noscript>
+{{ end -}}
