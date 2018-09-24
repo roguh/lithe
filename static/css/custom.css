@@ -1,3 +1,14 @@
+/* COLORS:
+
+main:
+#1B5A87
+#AEFEF4
+
+highlights:
+#FF5F40
+#CC1814
+*/
+
 html {
     font-family: Gill Sans, Gill Sans MT, Calibri, sans-serif;
 }
@@ -7,7 +18,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #733;
+    color: #1B5A87 /* HEADER BACKGROUND COLOR*/;
     padding: 0.5em 0;
     margin: 0;
 }
@@ -18,18 +29,19 @@ h3, h4, h5, h6 {
 
 a { 
     text-decoration: none;
+    font-weight: bold;
     color: #444;
-    transition: all 0.25s;
+    transition: color 0.25s;
 }
 
 header a:hover {
-    border-color: orange;
-    color: orange;
+    border-color: #FF5F40;
+    color: #FF5F40;
 }
 
 a:hover {
-    border-bottom: solid 1px black;
-    color: black;
+    border-bottom: solid 2px #CC1814;
+    color: #CC1814 !important;
 }
 
 .marginless {
@@ -39,18 +51,20 @@ a:hover {
 
 .icon {
     width: 32px;
-    height: 32px;
+    height: 48px;
     font-size: inherit;
     line-height: inherit;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
     transition: all 0.25s;
+    padding: 2px;
 }
 
 header .icon svg, .pager .icon svg {
     fill: white;
 }
+
 .icon svg {
     fill: #333;
     width: 100%;
@@ -59,15 +73,20 @@ header .icon svg, .pager .icon svg {
 
 .social a:hover {
     border: 0;
-    color: red;
+    color: #CC1814;
 }
 .social a:hover .icon {
-    height: 38px;
+    height: 48px;
     width: 38px;
 }
 
 .social a:hover .icon svg {
     fill: red;
+}
+
+.social {
+    font-size: 1em;
+    font-weight: bold;
 }
 
 .centered-text {
@@ -91,12 +110,12 @@ strong {
 
 header {
     color: white;
-    background-color: #613;
-    padding: 1em 0;
+    background-color: #1B5A87 /* HEADER BACKGROUND COLOR */;
+    padding: 0;
 }
 
 .intro h1 {
-    font-size: 2.5em;
+    font-size: 2.4em;
     display: inline-block;
     padding: 0;
     padding-right: 10px;
@@ -107,7 +126,21 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 0.5em;
 }
+
+.home h1 {
+    font-size: 3.5em;
+    padding: 1em 0.5em;
+}
+
+.home .container {
+    padding: 0;
+    padding-top: 5em;
+    padding-bottom: 15em;
+    max-width: 900px;
+}
+
 header p {
     font-size: 1.25em;
 }
@@ -139,7 +172,7 @@ header .search {
 } 
 
 .search {
-    margin: 1em 0;
+    margin: 0.7em 0;
 }
 
 .search input {
@@ -154,29 +187,37 @@ header .search input {
 
 .menu {
     line-height: 2;
+    padding: 1em 0;
 }
 
 .menu-entry:last-child {
-    padding: 0;
+    padding-right: 0;
 }
 
 
 .menu-entry {
-    padding-right: 1em;
+    padding-right: 1.2em;
     display: inline-block;
+    font-weight: bold; 
+}
+
+.menu-entry .active {
+    color: #bbb; 
+    border-bottom: solid 2px #bbb;
 }
 
 .menu .icon {
-    width: 24px;
-    height: 24px;
-}
-
-.menu a:hover {
-    font-size: 105%;
+    width: 18px;
+    height: 36px;
+    vertical-align: middle;
 }
 
 .tags {
-    font-size: 0.9em;
+    font-size: 80%; 
+}
+
+header .tags {
+    font-size: 69%; 
 }
 
 .date {
@@ -189,11 +230,11 @@ header .search input {
 }
 
 .title, .title a { 
-    color: #611;
+    color: #1B5A87 /* HEADER BACKGROUND COLOR */;
 }
 
 .big-title {
-    font-size: 2.5em;
+    font-size: 2.4em;
     padding: 0;
     margin: 0.25em 0;
 }
@@ -205,8 +246,7 @@ header .search input {
 
 footer {
     margin-top: 2em;
-    padding: 2em 0;
-    background-color: #faa;
+    padding: 0.5em 0;
     text-align: center;
     min-height: 100%;
 }
@@ -231,17 +271,14 @@ main, pre {
 }
 
 @media (min-width: 400px) and (min-height: 500px) {
-    header {
-        padding: 3em 0;
-    }
     .intro h1 {
-        font-size: 3em;
+        font-size: 2.0em;
     }
     .big-title {
-        font-size: 3em;
+        font-size: 2.2em;
     }
     .search {
-        margin: 2em 0;
+        margin: 0.6em 0;
     }
 }
 
@@ -272,7 +309,7 @@ ul, ul ul ul, ul ul ul ul ul {
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 122vh;
 }
 
 main {
@@ -280,9 +317,38 @@ main {
 }
 
 .pager a {
-    font-size: 1.3em;
+    font-size: 1.0em;
 }
 
-.toc-link {
+.pager .icon {
+    height: 27px;
+}
+
+.emph {
     font-style: italic;
 }
+
+.btn a:hover, a:hover.btn {
+    border-bottom: 0;
+}
+
+.btn {
+    background: #333;
+}
+
+
+.btn-c:hover {
+    background: #FF5F40;
+}
+.btn-c {
+    background: #FF5F40;
+}
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.7em;
+}
+
+

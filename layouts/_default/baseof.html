@@ -5,6 +5,9 @@
 </head>
 <body id='top-of-page'>
 <header>
+{{- if .IsHome -}}
+  {{- partial "home" . }}
+{{- end -}}
 <div class="container">
   {{- partial "header" . }}
 </div>

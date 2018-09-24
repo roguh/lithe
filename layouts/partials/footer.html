@@ -4,20 +4,6 @@
 {{ partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "footer") }}
 {{ end -}}
 
-{{- if .Site.Params.social -}}
-<div class="social menu">        
-  {{- range $platform, $username := .Site.Params.social -}}
-  {{- if $username -}}
-  <div class="menu-entry">
-  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
-    {{ $platform | humanize }}: {{ print ( index $.Site.Data.theme.social.base $platform ) $username }}
-  </a>
-  </div>
-  {{- end -}}
-  {{- end -}}
-</div>
-{{ end -}}
-
 {{- if .Site.Copyright }}
 <p>{{ .Site.Copyright | safeHTML }}</p>
 {{ end }}
@@ -25,7 +11,7 @@
 {{- if .Site.Params.Info.poweredby}}
 <p>Powered by 
   <a href="https://gohugo.io/">Hugo</a> (no, the static site generator) &amp; 
-  <a href="https://github.com/ribice/kiss">Kiss</a>.
+  <a href="https://github.com/roguh/lithe">Lithe</a>.
 </p>
 {{ end -}}
 

@@ -1,0 +1,24 @@
+{{ define "content" }}
+
+<div class="content">
+  {{ .Content }}
+</div>
+
+{{- if and .Site.Params.social }} 
+<div class="social">        
+  {{ range $platform, $username := .Site.Params.social }}
+  {{- if $username -}}
+  <p>
+  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+    {{ partial "icon" $platform }}
+  </a>
+  
+  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+    {{ print ( index $.Site.Params.socialLinks $platform ) }}
+  </a>
+  </p>
+  {{- end -}}
+  {{ end }}
+</div>
+{{ end -}}
+{{ end }}

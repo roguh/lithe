@@ -26,7 +26,7 @@ or <a href="/">articles</a>.
 <script src="{{ .Site.BaseURL }}/js/fuzzysort.js"></script>
 {{- $.Scratch.Add "searchindex" slice -}}
 {{- range $index, $element := .Site.Pages -}}
-    {{- $.Scratch.Add "searchindex" (dict "id" $index "title" $element.Title "url" $element.Permalink "tags" $element.Params.tags "text" ($element.Summary | plainify) "date" ($element.Date.Format "2 Monday January 2006")) -}}
+    {{- $.Scratch.Add "searchindex" (dict "id" $index "title" $element.Title "url" $element.Permalink "tags" $element.Params.tags "text" ($element.Summary | plainify) "date" ($element.Date.Format "2 Monday January 2006") "type" $element.Type) -}}
 {{- end -}}
 <script>
 var site = ({{- $.Scratch.Get "searchindex" -}}).map(function(d) {
@@ -126,12 +126,14 @@ function search(query) {
         // or force adding the content, even if it was not part of the match
         function add(keyResult, index, forceShow, makeLink) {
             var html = null;
-            if (keyResult === undefined || keyResult === null) {
-                if (forceShow) {
+            if (!(keyResult === undefined || keyResult === null)) {
+                html = fuzzysort.highlight(keyResult, "<strong>", "</strong>");
+            }
+            if (forceShow) {
+                if (html === null) {
                     html = resultObj.title;
                 }
-            } else {
-                html = fuzzysort.highlight(keyResult, "<strong>", "</strong>");
+                html = resultObj.type + ": " + html;
             }
             if (html !== null) {
                 var element = document.createElement("p");

@@ -1,0 +1,13 @@
+{{- if and .Site.Params.social (not .Params.hideSocial) }}
+<div class="social">        
+  {{- range $platform, $username := .Site.Params.social -}}
+  {{- if $username -}}
+  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+    {{ partial "icon" $platform }}
+  </a>
+  {{- end -}}
+  {{- end -}}
+</div>
+{{ end -}}
+
+

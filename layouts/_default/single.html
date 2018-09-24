@@ -1,6 +1,10 @@
 {{ define "content" }}
 <section>
-<p class="title big-title">{{- .Title -}}</p>
+{{ if (not .Params.HideTitle) }}
+<p class="title big-title">
+    {{- .Title -}}{{- if .Draft }} <span class='emph'>(Draft)</span>{{- end -}}
+</p>
+{{ end }}
 
 {{- if or (not .Params.HideDate) (not .Params.HideTags) }}
 <p>
@@ -20,9 +24,9 @@
 </aside>
 {{ end -}}
 
-{{- if (eq .Params.toc "bottom") }}
+{{- if and .Params.toc (ne .Params.toc "top") }}
 <p>
-  <a class="toc-link" href='#toc-of-page'>Table of contents available.</a>
+  <a class="emph" href='#toc-of-page'>Table of contents available.</a>
 </p>
 {{ end -}}
 
@@ -38,7 +42,7 @@
   <div class="related">{{ partial "related" . }}</div>
 {{ end -}}
 
-{{- if (eq .Params.toc "bottom") }}
+{{- if and .Params.toc (ne .Params.toc "top") }}
 <aside>
   <h2 id='toc-of-page'>Table of contents</h2>
   {{ .TableOfContents }}
@@ -61,6 +65,10 @@
 {{ if (eq .Params.mathjax true) }}
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+root: "{{ .Site.BaseURL }}/MathJax",
+extensions: ["tex2jax.js"],
+jax: ["input/TeX", "output/HTML-CSS"],
+"HTML-CSS": { fonts: ["TeX"] },
 tex2jax: {
   inlineMath: [['$','$'], ['\\(','\\)']],
   processEscapes: true,
@@ -69,8 +77,9 @@ tex2jax: {
 },
 });
 </script>
+    <!--src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"-->
 <script type="text/javascript" async
-src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"
+    src="{{ .Site.BaseURL }}/MathJax/MathJax.js"
 ></script>
 {{ end }}
 {{ end }}

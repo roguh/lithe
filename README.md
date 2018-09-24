@@ -22,7 +22,7 @@ Clone this repository to your hugo theme directory.
 ```bash
 mkdir -p themes
 cd themes
-git clone https://github.com/ribice/kiss.git
+git clone https://github.com/roguh/hugo-lithe.git
 ```
 
 ## Build

@@ -1,14 +1,15 @@
 <nav class="menu">
 {{- $menuName := .menuName }} {{ $currentPage := .currentPage -}}
 {{- range (index .menus $menuName) }}
-  <div class="menu-entry"> <a
-      {{- if or ($currentPage.HasMenuCurrent $menuName .) ($currentPage.IsMenuCurrent $menuName .) }}
-      class="active" {{ else }} href="{{ .URL }}"{{- end -}}>
+<div class="menu-entry"> 
+    <a
+        {{ if (or ($currentPage.HasMenuCurrent $menuName .) ($currentPage.IsMenuCurrent $menuName .)) }} class="active" {{ end }} 
+        href="{{ .URL }}">
     {{- .Pre }} <span>{{ .Name }}</span> {{ .Post -}}
     {{ if gt (len .Identifier) 0 }}
         {{ partial "icon" .Identifier }}
     {{ end }}
   </a>
-  </div>
+</div>
 {{ end -}}
 </nav>

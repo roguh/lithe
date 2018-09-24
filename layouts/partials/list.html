@@ -2,7 +2,7 @@
   {{- range sort .Pages -}}
   <article>
     <p class="title"><a href="{{- .Permalink -}}">
-    {{- .Title -}}{{- if .Draft -}} :: Draft{{- end -}}
+    {{- .Title -}}{{- if .Draft }} <span class='emph'>(Draft)</span>{{- end -}}
     </a></p>
     <p>
     {{- partial "date" (.Date.Format "January 2, 2006") }}

@@ -2,7 +2,7 @@
 <form id="termSearchForm" class="search" method="get" action="{{ .Permalink }}">
   <input class="c12" type="text" name="q" id="termSearchQuery" placeholder="
     {{- if .Site.Params.TermSearchPlaceholder -}}
-    {{- .Site.Params.TermSearchPlaceholder -}} {{- else -}} Type to find terms
+    {{- .Site.Params.TermSearchPlaceholder -}} {{- else -}} Type to search 
     {{- end -}}" autocomplete="off"/>
 </form>
 
@@ -12,7 +12,6 @@
 <article class='term-container' id="tag-{{ $value.Name | urlize }}">
   <p>
     <a class="title" href="{{ $.Site.LanguagePrefix }}/{{ $data.Plural }}/{{ $value.Name | urlize }}">#{{ $value.Name }}</a>
-    <span>has {{ $value.Count }} items</span>
   </p>
   <p class="tags">
     {{ range $i, $page := $value.Pages }}
