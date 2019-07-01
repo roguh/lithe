@@ -2,7 +2,7 @@
 <div class="social">        
   {{- range $platform, $username := .Site.Params.social -}}
   {{- if $username -}}
-  <a href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+  <a href="{{ print ( index $.Site.Data.theme.social.base $platform ) $username | safeURL }}" target='_blank' rel='noopener'>
     {{ partial "icon" $platform }}
   </a>
   {{- end -}}
