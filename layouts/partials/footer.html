@@ -9,9 +9,8 @@
 {{ end }}
 
 {{- if .Site.Params.Info.poweredby}}
-<p>Powered by 
-  <a href="https://gohugo.io/">Hugo</a> (no, the static site generator) &amp; 
-  <a href="https://github.com/roguh/lithe">Lithe</a>.
+<p>
+{{- .Site.Params.Info.poweredby | markdownify}}
 </p>
 {{ end -}}
 
