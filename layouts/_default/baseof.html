@@ -20,6 +20,9 @@
 <footer>
 <div class="container">
   {{- partial "footer.html" . -}}
+  {{- if .Site.Copyright -}}
+  <p>{{ .Site.Copyright | markdownify }}</p>
+  {{- end -}}
 </div>
 </footer>
 {{- partial "scripts.html" . -}}

@@ -4,10 +4,6 @@
 {{ partial "menu" (dict "menus" .Site.Menus "currentPage" . "menuName" "footer") }}
 {{ end -}}
 
-{{- if .Site.Copyright }}
-<p>{{ .Site.Copyright | safeHTML }}</p>
-{{ end }}
-
 {{- if .Site.Params.Info.poweredby}}
 <p>
 {{- .Site.Params.Info.poweredby | markdownify}}
@@ -21,7 +17,6 @@
 {{- if .Site.Params.hiddenFooter }}
 <p class='hide'>
 Last change: {{ .Site.LastChange }}.
-Copyright: {{ .Site.Copyright }}.
 Hugo version: {{ .Hugo.Version }}.
 </p>
 {{ end -}}
