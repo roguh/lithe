@@ -1,9 +1,5 @@
 {{ define "content" }}
 
-<div class="content">
-  {{ .Content }}
-</div>
-
 {{- if and .Site.Params.social }} 
 <div class="social">        
   {{ range $platform, $username := .Site.Params.social }}
@@ -21,4 +17,9 @@
   {{ end }}
 </div>
 {{ end -}}
+
+<div class="content">
+  {{ .Content }}
+</div>
+
 {{ end }}
