@@ -1,10 +1,7 @@
 {{- if (not .IsHome) -}}
 <div class="intro">
 <h1>
-<a href="{{ .Site.BaseURL }}">
-{{ .Site.Title }}
-</a>
-
+<a href='{{ .Site.BaseURL }}'>{{ .Site.Title | markdownify }}</a>
 </h1>
 
 {{- partial "social/bar" . -}}
