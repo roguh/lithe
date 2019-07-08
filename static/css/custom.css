@@ -312,7 +312,7 @@ ul, ul ul ul, ul ul ul ul ul {
 body {
     display: flex;
     flex-direction: column;
-    min-height: 122vh;
+    min-height: 250vh;
 }
 
 main {
