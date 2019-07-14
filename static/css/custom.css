@@ -141,7 +141,6 @@ header {
     padding: 0;
     padding-top: 5em;
     padding-bottom: 15em;
-    max-width: 900px;
 }
 
 header p {
@@ -312,7 +311,7 @@ ul, ul ul ul, ul ul ul ul ul {
 body {
     display: flex;
     flex-direction: column;
-    min-height: 122vh;
+    min-height: 600vh;
 }
 
 main {
