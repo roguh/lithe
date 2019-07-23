@@ -11,6 +11,7 @@ highlights:
 
 html {
     font-family: Gill Sans, Gill Sans MT, Calibri, sans-serif;
+    hyphens: auto;
 }
 
 body {
@@ -119,7 +120,7 @@ header {
 }
 
 .intro h1 {
-    font-size: 2.4em;
+    font-size: 1.5em;
     display: inline-block;
     padding: 0;
     padding-right: 10px;
@@ -235,12 +236,6 @@ header .tags {
     color: #1B5A87 /* HEADER BACKGROUND COLOR */;
 }
 
-.big-title {
-    font-size: 2.4em;
-    padding: 0;
-    margin: 0.25em 0;
-}
-
 .summary {
     background-color: #f8f8f8;
     padding: 0.5em;
@@ -253,15 +248,10 @@ footer {
     min-height: 100%;
 }
 
-a, code, main {
+code {
     word-wrap: break-word; /* IE */
     word-break: break-all;
 }
-
-main {
-    hyphens: auto;
-}
-
 
 main, pre {
     overflow-x: auto;
@@ -272,12 +262,15 @@ main, pre {
     display: none;
 }
 
-@media (min-width: 400px) and (min-height: 500px) {
+.container {
+  width: auto;
+  max-width: 40em;
+  margin: 0 auto;
+}
+
+@media (min-width: 60em) and (min-height: 500px) {
     .intro h1 {
-        font-size: 2.0em;
-    }
-    .big-title {
-        font-size: 2.2em;
+        font-size: 4.0em;
     }
     .search {
         margin: 0.6em 0;
@@ -312,6 +305,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 600vh;
+}
+
+body.isHome {
+    min-height: 150vh;
 }
 
 main {
@@ -353,4 +350,16 @@ h2 {
     font-size: 1.7em;
 }
 
+.waves {
+  background: #1B5A87 url('/images/waves.svg');
+  height: 2em;
+  background-size: 10em;
+  width: 100%;
+}
 
+.waves-inverted {
+  background: #1B5A87 url('/images/waves-invert.svg');
+  height: 2em;
+  background-size: 10em;
+  width: 100%;
+}

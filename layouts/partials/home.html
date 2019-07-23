@@ -1,7 +1,7 @@
 <div class="home">
 <div class="container">
   <div class="intro">
-  <h1 class="big-title">
+  <h1>
   <a href="{{ .Site.BaseURL }}">
   {{- .Site.Title | markdownify }}
   </a>
@@ -14,7 +14,7 @@
   {{- if .Site.Params.Description }}
   {{ .Site.Params.Description | markdownify }}
   {{ end -}}
-  
+
   <span class="tags">
   {{- range $index, $val := first 20 $.Site.Taxonomies.tags.ByCount -}}
   {{ if (gt $index 0) }},{{ end }}
@@ -23,4 +23,6 @@
   </span>
   </p>
 </div>
+<div class='waves-inverted'></div>
+<div class='waves'></div>
 </div>
