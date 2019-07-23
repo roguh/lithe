@@ -123,6 +123,7 @@ header {
     font-size: 1.5em;
     display: inline-block;
     word-break: keep-all;
+    padding: 0;
 }
 
 .intro {
