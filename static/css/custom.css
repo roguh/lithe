@@ -122,8 +122,6 @@ header {
 .intro h1 {
     font-size: 1.5em;
     display: inline-block;
-    padding: 0;
-    padding-right: 10px;
     word-break: keep-all;
 }
 
@@ -131,17 +129,16 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 0.5em;
 }
 
 .home h1 {
-    font-size: 3.5em;
+    font-size: 3.2em;
 }
 
 .home .container {
     padding: 0;
-    padding-top: 5em;
-    padding-bottom: 15em;
+    padding-top: 4em;
+    padding-bottom: 12em;
 }
 
 header p {
@@ -150,6 +147,7 @@ header p {
 
 .social {
     display: inline-block;
+    max-width: 9em;
 }
 
 header a, header input {
@@ -238,12 +236,10 @@ header .tags {
 
 .summary {
     background-color: #f8f8f8;
-    padding: 0.5em;
 }
 
 footer {
     margin-top: 2em;
-    padding: 0.5em 0;
     text-align: center;
     min-height: 100%;
 }
