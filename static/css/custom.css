@@ -145,7 +145,7 @@ header p {
     font-size: 1.25em;
 }
 
-.social {
+.intro .social {
     display: inline-block;
     max-width: 8em;
 }
