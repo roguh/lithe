@@ -137,7 +137,6 @@ header {
 }
 
 .home .container {
-    padding: 0;
     padding-top: 4em;
     padding-bottom: 12em;
 }
@@ -263,6 +262,8 @@ main, pre {
   width: auto;
   max-width: 40em;
   margin: 0 auto;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
 }
 
 @media (min-width: 60em) and (min-height: 500px) {
