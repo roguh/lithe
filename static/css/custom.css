@@ -349,14 +349,15 @@ h2 {
 
 .waves {
   background: #1B5A87 url('/images/waves.svg');
-  height: 2em;
-  background-size: 10em;
+  height: 4em;
+  background-size: 20em;
   width: 100%;
 }
 
 .waves-inverted {
   background: #1B5A87 url('/images/waves-invert.svg');
-  height: 2em;
-  background-size: 10em;
+  background-position: 100% 0%;
+  height: 4em;
+  background-size: 20em;
   width: 100%;
 }
